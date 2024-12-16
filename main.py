@@ -8,6 +8,30 @@ root.geometry("800x600")
 root.title('mapbook')
 
 
+
+
+
+class User:
+    def __init__(self, imie, nazwsiko, postow, lokalizacja):
+        self.imie = imie
+        self.nazwsiko = nazwsiko
+        self.postow = postow
+        self.lokalizacja = lokalizacja
+
+
+users=[
+    User('aaa','aaa','1','aaaa'),
+    User('bbb','bbb','2','bbbb'),
+    User('ccc','ccc','3','cccc'),
+]
+def show_users():
+
+    for idx, user in enumerate(users):
+        listbox_lista_obiektow.insert(idx, user.imie)
+
+
+
+
 # ramki
 ramka_lista_obiektow=Frame(root)
 ramka_formularz = Frame(root)
@@ -26,8 +50,8 @@ label_lista_obiektow = Label(ramka_lista_obiektow, text="Lista obiektow: ")
 label_lista_obiektow.grid(row=0, column=0, columnspan=3)
 listbox_lista_obiektow = Listbox(ramka_lista_obiektow, width=50)
 listbox_lista_obiektow.grid(row=1, column=0, columnspan=3)
-button_pokaz_szczeoly=Button(ramka_lista_obiektow,text='pokaz szczegoly', command=lambda:print('aaa'))
-button_pokaz_szczeoly.grid(row=2, column=0)
+button_pokaz_szczegoly=Button(ramka_lista_obiektow,text='pokaz szczegoly', command=lambda:print('aaa'))
+button_pokaz_szczegoly.grid(row=2, column=0)
 button_usun_obiekt=Button(ramka_lista_obiektow,text='usun obiekt')
 button_usun_obiekt.grid(row=2, column=1)
 button_edytuj_obiekt=Button(ramka_lista_obiektow,text='edytuj obiekt')
@@ -81,10 +105,15 @@ label_szczegoly_lokalizacja.grid(row=1, column=6)
 label_szczegoly_lokalizacja=Label(ramka_szczegoly_obiektu, text="... ",width=10)
 label_szczegoly_lokalizacja.grid(row=1, column=7)
 
-map_widget=tkintermapview.TkinterMapView(ramka_mapa,width=600, height=400)
+map_widget=tkintermapview.TkinterMapView(ramka_szczegoly_obiektu,width=600, height=400)
 map_widget.set_position(deg_x=52.0, deg_y=21)
 map_widget.set_zoom(6)
 map_widget.grid(row=3, column=0,columnspan=8)
+
+show_users()
+
+
+
 root.mainloop()
 
 
