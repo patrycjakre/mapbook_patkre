@@ -51,7 +51,36 @@ def delete_user()->None:
     users.pop(i)
     show_users()
 
+def edit_user()->None:
+    i=listbox_lista_obiektow.index(ACTIVE)
+    entry_imie.insert(0,users[i].imie)
+    entry_nazwisko.insert(0,users[i].nazwsiko)
+    entry_liczba_postow.insert(0,users[i].postow)
+    entry_lokalizacja.insert(0,users[i].lokalizacja)
 
+    button_dodaj_obiekt.config(text='zapisz zmiany',command=lambda:update_user(i))
+
+def update_user(i)->None:
+
+    users[i].imie=entry_imie.get()
+    users[i].nazwsiko=entry_nazwisko.get()
+    users[i].postow=entry_liczba_postow.get()
+    users[i].lokalizacja=entry_lokalizacja.get()
+
+    entry_imie.delete(0, END)
+    entry_nazwisko.delete(0, END)
+    entry_liczba_postow.delete(0, END)
+    entry_lokalizacja.delete(0, END)
+    entry_imie.focus()
+    button_dodaj_obiekt.config(text='dodaj obiekt', command=add_user)
+    show_users()
+
+def show_user_details()->None:
+    i = listbox_lista_obiektow.index(ACTIVE)
+    label_szczegoly_imie_wartosc.config(text=users[i].imie)
+    label_szczegoly_nazwisko_wartosc.config(text=users[i].nazwsiko)
+    label_szczegoly_posty_wartosc.config(text=users[i].postow)
+    label_szczegoly_lokalizacja_wartosc.config(text=users[i].lokalizacja)
 
 
 
@@ -72,11 +101,11 @@ label_lista_obiektow = Label(ramka_lista_obiektow, text="Lista obiektow: ")
 label_lista_obiektow.grid(row=0, column=0, columnspan=3)
 listbox_lista_obiektow = Listbox(ramka_lista_obiektow, width=50)
 listbox_lista_obiektow.grid(row=1, column=0, columnspan=3)
-button_pokaz_szczegoly=Button(ramka_lista_obiektow,text='pokaz szczegoly', command=lambda:print('aaa'))
+button_pokaz_szczegoly=Button(ramka_lista_obiektow,text='pokaz szczegoly', command=show_user_details)
 button_pokaz_szczegoly.grid(row=2, column=0)
 button_usun_obiekt=Button(ramka_lista_obiektow,text='usun obiekt',command=delete_user)
 button_usun_obiekt.grid(row=2, column=1)
-button_edytuj_obiekt=Button(ramka_lista_obiektow,text='edytuj obiekt')
+button_edytuj_obiekt=Button(ramka_lista_obiektow,text='edytuj obiekt', command=edit_user)
 button_edytuj_obiekt.grid(row=2, column=2)
 
 #obiekty wewnatrz formularza
@@ -116,16 +145,16 @@ label_szczegoly_imie_wartosc=Label(ramka_szczegoly_obiektu, text="... ",width=10
 label_szczegoly_imie_wartosc.grid(row=1, column=1)
 label_szczegoly_nazwisko=Label(ramka_szczegoly_obiektu, text="Nazwisko: ")
 label_szczegoly_nazwisko.grid(row=1, column=2)
-label_szczegoly_nazwisko=Label(ramka_szczegoly_obiektu, text="... ",width=10)
-label_szczegoly_nazwisko.grid(row=1, column=3)
+label_szczegoly_nazwisko_wartosc=Label(ramka_szczegoly_obiektu, text="... ",width=10)
+label_szczegoly_nazwisko_wartosc.grid(row=1, column=3)
 label_szczegoly_posty=Label(ramka_szczegoly_obiektu, text="posty: ")
 label_szczegoly_posty.grid(row=1, column=4)
-label_szczegoly_posty=Label(ramka_szczegoly_obiektu, text="... ",width=10)
-label_szczegoly_posty.grid(row=1, column=5)
+label_szczegoly_posty_wartosc=Label(ramka_szczegoly_obiektu, text="... ",width=10)
+label_szczegoly_posty_wartosc.grid(row=1, column=5)
 label_szczegoly_lokalizacja=Label(ramka_szczegoly_obiektu, text="lokalizacja: ")
 label_szczegoly_lokalizacja.grid(row=1, column=6)
-label_szczegoly_lokalizacja=Label(ramka_szczegoly_obiektu, text="... ",width=10)
-label_szczegoly_lokalizacja.grid(row=1, column=7)
+label_szczegoly_lokalizacja_wartosc=Label(ramka_szczegoly_obiektu, text="... ",width=10)
+label_szczegoly_lokalizacja_wartosc.grid(row=1, column=7)
 
 map_widget=tkintermapview.TkinterMapView(ramka_szczegoly_obiektu,width=600, height=400)
 map_widget.set_position(deg_x=52.0, deg_y=21)
